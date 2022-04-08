@@ -15,9 +15,7 @@
 
 # e.t.c
 **為回應
-    
-    javac fileOperaterMain.java
-    java fileOperaterMain
+
     **請輸入目標資料夾路徑：
     C:\Dir
     **功能1：showFiles
