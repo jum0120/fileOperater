@@ -20,7 +20,7 @@
     C:\Dir
     **功能1：showFiles
     **功能2：collectFiles
-    **功能3：collectFilesLink
+    **功能3：collectFilesLink（需有系統管理員權限）
     **功能4：numberAdd
     **功能5：renameFileByTxt
     **請輸入編號：
