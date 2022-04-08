@@ -36,8 +36,10 @@ public class fileOperaterMain {
 		//numberAdd
 		}else if (num.equals("4")){
 			System.out.println("請輸入增加數字：");
+			int maximumNum = 100000000;
 			int tempNum = sc.nextInt();
-			fior.numberAdd(dir, tempNum);
+			fior.numberAdd(dir, maximumNum + tempNum);
+			fior.numberAdd(dir, -1 * maximumNum);
 		//renameFileByTxt
 		}else if (num.equals("5")){
 			System.out.println("請輸入txt路徑：");
@@ -54,15 +56,13 @@ public class fileOperaterMain {
 			Scanner sc = new Scanner(System.in);
 			String dir = null;
 			String funNum = null;
-			//不停重複
-			while(true) {
-				//目標路徑
-				dir = enterDir(sc);
-				//輸入功能編號
-				funNum = enterFunNumber(sc);
-				//執行指定功能
-				funSelect(sc, dir, funNum);
-			}
+			//目標路徑
+			dir = enterDir(sc);
+			//輸入功能編號
+			funNum = enterFunNumber(sc);
+			//執行指定功能
+			funSelect(sc, dir, funNum);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

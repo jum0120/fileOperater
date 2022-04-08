@@ -163,13 +163,13 @@ public class FileOperater {
 				//如果檔名是純數字
 				boolean isNumeric =  oldFileName.matches("[+-]?\\d*(\\.\\d+)?");
 				if(isNumeric){
-					int tempNum = Integer.parseInt(oldFileName);
-					tempNum += num;
-					String tempStr = Integer.toString(tempNum);
+					int oldNum = Integer.parseInt(oldFileName);
+					int newNum = oldNum += num;
+					String tempStr = Integer.toString(newNum);
 					//更改編號
 					renameFile(files[i].getAbsolutePath(),tempStr);
 				}else{
-					System.out.println(oldFileName + ":不予改動");
+					System.out.println(oldFileName + ":非編號不予改動");
 				}
 			} 
 		}
@@ -289,4 +289,8 @@ public class FileOperater {
 			System.out.println("無檔案");
 		}
 	}
+	
+	
+	
+	
 }
