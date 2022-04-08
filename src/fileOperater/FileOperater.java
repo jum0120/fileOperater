@@ -4,67 +4,36 @@ import java.io.*;
 import java.io.IOException;
 import java.nio.file.Files;
 public class FileOperater {
-	public String getDirPath(String filePath){
-		return filePath.substring(0,filePath.lastIndexOf("\\"));
+	public String getDirPath(String Path){
+		return Path.substring(0,Path.lastIndexOf("\\"));
 	}
-	public String getFileName(String filePath){
-		return filePath.substring(filePath.lastIndexOf("\\") + 1, filePath.lastIndexOf("."));
+	public String getFileName(String Path){
+		return Path.substring(Path.lastIndexOf("\\") + 1, Path.lastIndexOf("."));
 	}
-	public String getExtension(String filePath){
-		return filePath.substring(filePath.lastIndexOf(".") + 1);
-	}
-
-	//暫時沒用,留著備用
-	public void renameFileInDir(String dir, String conditionStr, String extension) {
-		
-		File f = new File(dir);
-		File[] files = f.listFiles();
-		for (int i = 0; i < files.length; i++) {
-			//目標是檔案
-			if (files[i].isFile()) {
-				//files[i].renameTo()
-				String fileName = files[i].getName();
-				int index = fileName.length() - conditionStr.length();
-				//夠長 可能含有conditionStr
-				if(index > 0){
-					String checkStr = fileName.substring(index);
-					//符合要找的條件
-					if (checkStr.equals(conditionStr)){
-						int index2 = files[i].getAbsolutePath().length() - conditionStr.length();
-						File newName = new File(files[i].getAbsolutePath().substring(0,index2) + extension);
-						//檔名不衝突,重命名
-						if (newName.exists()){
-							System.out.println(newName.getName() + " 檔名已存在,保留");
-						}else{
-							files[i].renameTo(newName);
-							System.out.println(newName.getName() + " 重命名完成");
-						}
-					}
-				}
-			}
-		}
+	public String getExtension(String Path){
+		return Path.substring(Path.lastIndexOf(".") + 1);
 	}
 	
 	//@Overload
-	public void collectFiles(String dir) {
-		File f = new File(dir);
+	public void collectFiles(String path) {
+		File f = new File(path);
 		collectFiles(f);
 	}
 	
 	//把子資料夾的所有檔案全部移出到coll
 	public void collectFiles(File f){
 		String path = f.getAbsolutePath();
+		String collDirName = "coll";
 		File[] files = f.listFiles();
 		//有檔案/資料夾存在
 		if(files.length > 0){
 			//製造收集用資料夾
-			String collDirName = "coll";
 			File collectDir = new File(path + "/" + collDirName);
 			if (!collectDir.exists()){
 				collectDir.mkdirs();
 			}
 			for (int i = 0 ; i < files.length ; i++){
-				//重複則不收集
+				//不重複則收集
 				if(!files[i].getName().equals(collDirName)){
 					//遞迴下層資料夾
 					collectFilesRecursive(collectDir, files[i], files[i].getName() + "_");
@@ -118,17 +87,17 @@ public class FileOperater {
 	//把子資料夾的所有檔案全部製造捷徑到collLink
 	public void collectFilesLink(File f){
 		String path = f.getAbsolutePath();
+		String collDirName = "collLink";
 		File[] files = f.listFiles();
 		//有檔案/資料夾存在
 		if(files.length > 0){
-			//製造收集用資料夾
-			String collDirName = "collLink";
+			//製造收集用資料夾			
 			File collectDir = new File(path + "/" + collDirName);
 			if (!collectDir.exists()){
 				collectDir.mkdirs();
 			}
 			for (int i = 0 ; i < files.length ; i++){
-				//重複則不收集
+				//不重複則收集
 				if(!files[i].getName().equals(collDirName)){
 					//遞迴下層資料夾
 					collectFileLinksRecursive(collectDir, files[i], files[i].getName() + "_");
@@ -243,12 +212,9 @@ public class FileOperater {
 		String[] data = {};
 		String dataLine = "";
 		try(BufferedReader br = new BufferedReader(
-				new InputStreamReader(
-				new FileInputStream(doc)))){
-			
-			
+								new InputStreamReader(
+								new FileInputStream(doc)))){
 			dataLine = br.readLine();
-			
 			while (dataLine != null){
 				data = dataLine.split("\t");
 				oldFile = new File(oldFilePath + "/" + data[0]);
@@ -260,11 +226,36 @@ public class FileOperater {
 			e.printStackTrace();
 		}
 	}
+	//暫時沒用,留著備用
+	public void renameFileInDir(String dir, String conditionStr) {
+		String extension = getExtension(dir);
+		File f = new File(dir);
+		File[] files = f.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			//目標是檔案
+			if (files[i].isFile()) {
+				//files[i].renameTo()
+				String fileName = files[i].getName();
+				int index = fileName.length() - conditionStr.length();
+				//夠長 可能含有conditionStr
+				if(index > 0){
+					String checkStr = fileName.substring(index);
+					//符合要找的條件
+					if (checkStr.equals(conditionStr)){
+						int index2 = files[i].getAbsolutePath().length() - conditionStr.length();
+						String newName = files[i].getAbsolutePath().substring(0,index2) + extension;
+						
+						renameFile(files[i], newName);
+					}
+				}
+			}
+		}
+	}
 	
 
 	//@Overload
-	public void showFiles(String dir){
-		File f = new File(dir);
+	public void showFiles(String path){
+		File f = new File(path);
 		showFiles(f, 0);
 	}
 	//@Overload

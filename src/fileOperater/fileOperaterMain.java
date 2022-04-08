@@ -1,10 +1,7 @@
 package fileOperater;
 
 
-
-//import java.io.IOException;
 import java.util.Scanner;
-//import java.nio.file.*;
 public class fileOperaterMain {
 	public static String enterDir(Scanner sc){
 		System.out.println("請輸入目標資料夾路徑：");
@@ -15,7 +12,7 @@ public class fileOperaterMain {
 	public static void funMsg(){
 		System.out.println("功能1：showFiles");
 		System.out.println("功能2：collectFiles");
-		System.out.println("功能3：collectFilesLink");
+		System.out.println("功能3：collectFilesLink(需有工作管理員權限)");
 		System.out.println("功能4：numberAdd");
 		System.out.println("功能5：renameFileByTxt");
 	}
@@ -46,6 +43,10 @@ public class fileOperaterMain {
 			System.out.println("請輸入txt路徑：");
 			String txtPath = sc.nextLine();
 			fior.renameFileByTxt(dir, txtPath);
+		//輸入錯誤格式、編號
+		}else {
+			System.out.println("輸入錯誤，請重新輸入：");
+			funSelect(sc, dir, num);
 		}
 	}
 	public static void main(String[] args){
@@ -53,12 +54,15 @@ public class fileOperaterMain {
 			Scanner sc = new Scanner(System.in);
 			String dir = null;
 			String funNum = null;
-			//目標路徑
-			dir = enterDir(sc);
-			//輸入功能編號
-			funNum = enterFunNumber(sc);
-			//執行指定功能
-			funSelect(sc, dir, funNum);
+			//不停重複
+			while(true) {
+				//目標路徑
+				dir = enterDir(sc);
+				//輸入功能編號
+				funNum = enterFunNumber(sc);
+				//執行指定功能
+				funSelect(sc, dir, funNum);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
