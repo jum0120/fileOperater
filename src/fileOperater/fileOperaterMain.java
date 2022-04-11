@@ -12,7 +12,7 @@ public class fileOperaterMain {
 	public static void funMsg(){
 		System.out.println("功能1：showFiles");
 		System.out.println("功能2：collectFiles");
-		System.out.println("功能3：collectFilesLink(需有工作管理員權限)");
+		System.out.println("功能3：collectFilesLink（需有系統管理員權限）");
 		System.out.println("功能4：numberAdd");
 		System.out.println("功能5：renameFileByTxt");
 	}
@@ -23,28 +23,28 @@ public class fileOperaterMain {
 		return funNum;
 	}
 	public static void funSelect(Scanner sc, String dir, String num){
-		FileOperater fior = new FileOperater();
+		FileOperater fior = new FileOperater(dir);
 		//showFiles
 		if (num.equals("1")){
-			fior.showFiles(dir);
+			fior.showFiles();
 		//collectFiles
 		}else if (num.equals("2")){
-			fior.collectFiles(dir);
+			fior.collectFiles();
 		//collectFilesLink
 		}else if (num.equals("3")){
-			fior.collectFilesLink(dir);
+			fior.collectFilesLink();
 		//numberAdd
 		}else if (num.equals("4")){
 			System.out.println("請輸入增加數字：");
 			int maximumNum = 100000000;
 			int tempNum = sc.nextInt();
-			fior.numberAdd(dir, maximumNum + tempNum);
-			fior.numberAdd(dir, -1 * maximumNum);
+			fior.numberAdd(maximumNum + tempNum);
+			fior.numberAdd(-1 * maximumNum);
 		//renameFileByTxt
 		}else if (num.equals("5")){
 			System.out.println("請輸入txt路徑：");
 			String txtPath = sc.nextLine();
-			fior.renameFileByTxt(dir, txtPath);
+			fior.renameFileByTxt(txtPath);
 		//輸入錯誤格式、編號
 		}else {
 			System.out.println("輸入錯誤，請重新輸入：");

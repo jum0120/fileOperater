@@ -4,6 +4,21 @@ import java.io.*;
 import java.io.IOException;
 import java.nio.file.Files;
 public class FileOperater {
+	File f = null;
+	String path = null;
+	
+	//constructor
+	FileOperater(String path){
+		File f = new File(path);
+		this.path = path;
+		this.f = f;
+	}
+	FileOperater(File f){
+		this.path = f.getAbsolutePath();
+		this.f = f;
+	}
+	
+	
 	public String getDirPath(String Path){
 		return Path.substring(0,Path.lastIndexOf("\\"));
 	}
@@ -14,15 +29,8 @@ public class FileOperater {
 		return Path.substring(Path.lastIndexOf(".") + 1);
 	}
 	
-	//@Overload
-	public void collectFiles(String path) {
-		File f = new File(path);
-		collectFiles(f);
-	}
-	
 	//把子資料夾的所有檔案全部移出到coll
-	public void collectFiles(File f){
-		String path = f.getAbsolutePath();
+	public void collectFiles(){
 		String collDirName = "coll";
 		File[] files = f.listFiles();
 		//有檔案/資料夾存在
@@ -76,17 +84,9 @@ public class FileOperater {
 			}
 		} 
 	}
-
-
-	//@Overload
-	public void collectFilesLink(String path){
-		File f = new File(path);
-		collectFilesLink(f);	
-	}
 	
 	//把子資料夾的所有檔案全部製造捷徑到collLink
-	public void collectFilesLink(File f){
-		String path = f.getAbsolutePath();
+	public void collectFilesLink(){
 		String collDirName = "collLink";
 		File[] files = f.listFiles();
 		//有檔案/資料夾存在
@@ -141,22 +141,17 @@ public class FileOperater {
 		} 
 	}
 	
-	
-	
-	//@Overload
-	public void numberAdd(String path, int num){
-		File f = new File(path);
+	public void numberAdd(int num){
 		numberAdd(f, num);
 	}
-
+	
 	//檔案編號調整(+.-)
-	public void numberAdd(File f, int num){
-		String path = f.getAbsolutePath();
+	private void numberAdd(File f, int num){
 		File[] files = f.listFiles();
 		for(int i = 0 ; i < files.length ; i++){
 			//目標是資料夾
 			if (files[i].isDirectory()) {
-				numberAdd(path + "/" + files[i].getName(), num);
+				numberAdd(new File(path + "/" + files[i].getName()), num);
 			//目標是檔案
 			}else{
 				String oldFileName = getFileName(files[i].getAbsolutePath());
@@ -206,9 +201,10 @@ public class FileOperater {
 	}
 	
 	//txtFormat:oldFileName \t  newFileName
-	public void renameFileByTxt(String oldFilePath, String txtPath){
+	public void renameFileByTxt(String txtPath){
 		File doc = new File(txtPath);
 		File oldFile = null;
+		String oldFilePath = f.getAbsolutePath();
 		String[] data = {};
 		String dataLine = "";
 		try(BufferedReader br = new BufferedReader(
@@ -244,22 +240,19 @@ public class FileOperater {
 					if (checkStr.equals(conditionStr)){
 						int index2 = files[i].getAbsolutePath().length() - conditionStr.length();
 						String newName = files[i].getAbsolutePath().substring(0,index2) + extension;
-						
+							
 						renameFile(files[i], newName);
 					}
 				}
 			}
 		}
+		
 	}
 	
 
+
 	//@Overload
-	public void showFiles(String path){
-		File f = new File(path);
-		showFiles(f, 0);
-	}
-	//@Overload
-	public void showFiles(File f){
+	public void showFiles(){
 		showFiles(f, 0);
 	}
 	
