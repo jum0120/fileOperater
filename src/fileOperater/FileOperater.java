@@ -1,11 +1,14 @@
 package fileOperater;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 public class FileOperater {
-	File f = null;
-	String path = null;
+	private File f = null;
+	private String path = null;
 	
 	//constructor
 	FileOperater(String path){
@@ -17,7 +20,12 @@ public class FileOperater {
 		this.path = f.getAbsolutePath();
 		this.f = f;
 	}
-	
+	public File getF() {
+		return f;
+	}
+	public String getPath() {
+		return path;
+	}
 	
 	public String getDirPath(String Path){
 		return Path.substring(0,Path.lastIndexOf("\\"));
@@ -141,6 +149,7 @@ public class FileOperater {
 		} 
 	}
 	
+	//@Overload
 	public void numberAdd(int num){
 		numberAdd(f, num);
 	}
@@ -250,40 +259,6 @@ public class FileOperater {
 	}
 	
 
-
-	//@Overload
-	public void showFiles(){
-		showFiles(f, 0);
-	}
-	
-	//把含子資料夾的全部檔案print
-	private void showFiles(File f, int level){
-		File[] files = f.listFiles();
-		//有檔案/資料夾存在
-		if(files.length > 0){
-			for (int i = 0 ; i < files.length ; i++){
-				for(int j = 0 ; j < level ; j++){
-					System.out.print("  ");
-				}
-				//目標是資料夾
-				if (files[i].isDirectory()) {
-					System.out.println(files[i].getName());
-					//遞迴
-					showFiles(files[i], level + 1);
-				//目標是檔案
-				}else{
-					System.out.println(files[i].getName());
-				} 
-			}
-		}else{
-			for(int j = 0 ; j < level ; j++){
-					System.out.print("  ");
-			}
-			System.out.println("無檔案");
-		}
-	}
-	
-	
 	
 	
 }

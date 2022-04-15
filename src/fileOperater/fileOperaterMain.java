@@ -2,10 +2,22 @@ package fileOperater;
 
 
 import java.util.Scanner;
+import java.io.File;
 public class fileOperaterMain {
 	public static String enterDir(Scanner sc){
 		System.out.println("請輸入目標資料夾路徑：");
-		String dir = sc.nextLine();
+		String dir = "";
+		try {
+			dir = sc.nextLine();
+			File f = new File(dir);
+			if (!f.isDirectory()) {
+				System.out.println("輸入錯誤，請重新輸入。");
+				dir = enterDir(sc);
+			}
+		}catch(Exception e){
+			System.out.println("輸入錯誤，請重新輸入。");
+			dir = enterDir(sc);
+		}
 		return dir;
 	}
 	
@@ -16,48 +28,61 @@ public class fileOperaterMain {
 		System.out.println("功能4：numberAdd");
 		System.out.println("功能5：renameFileByTxt");
 	}
-	public static String enterFunNumber(Scanner sc){
-		funMsg();
+	public static int enterFunNumber(Scanner sc){
 		System.out.println("請輸入編號：");
-		String funNum = sc.nextLine();
+		int funNum = -1;
+		try{
+			funNum = Integer.parseInt(sc.nextLine());
+			
+			//輸入錯誤編號
+			//合理數據:1~5
+			if (funNum > 5 || funNum < 1){
+				System.out.println("輸入錯誤，請重新輸入。");
+				funNum = enterFunNumber(sc);
+			}	
+		//輸入錯誤格式
+		//合理數據:1~5
+		}catch(Exception e){
+			System.out.println("輸入錯誤，請重新輸入。");
+			funNum = enterFunNumber(sc);
+		}
+		
 		return funNum;
 	}
-	public static void funSelect(Scanner sc, String dir, String num){
-		FileOperater fior = new FileOperater(dir);
+	public static void funSelect(Scanner sc, String dir, int num){
+		FileOperaterController fior = new FileOperaterController(dir);
 		//showFiles
-		if (num.equals("1")){
+		if (num == 1){
 			fior.showFiles();
 		//collectFiles
-		}else if (num.equals("2")){
+		}else if (num == 2){
 			fior.collectFiles();
 		//collectFilesLink
-		}else if (num.equals("3")){
+		}else if (num == 3){
 			fior.collectFilesLink();
 		//numberAdd
-		}else if (num.equals("4")){
+		}else if (num == 4){
 			System.out.println("請輸入增加數字：");
 			int maximumNum = 100000000;
 			int tempNum = sc.nextInt();
 			fior.numberAdd(maximumNum + tempNum);
 			fior.numberAdd(-1 * maximumNum);
 		//renameFileByTxt
-		}else if (num.equals("5")){
+		}else if (num == 5){
 			System.out.println("請輸入txt路徑：");
 			String txtPath = sc.nextLine();
 			fior.renameFileByTxt(txtPath);
-		//輸入錯誤格式、編號
-		}else {
-			System.out.println("輸入錯誤，請重新輸入：");
-			funSelect(sc, dir, num);
 		}
 	}
 	public static void main(String[] args){
 		try {
 			Scanner sc = new Scanner(System.in);
 			String dir = null;
-			String funNum = null;
-			//目標路徑
+			int funNum = -1;
+			//輸入目標路徑
 			dir = enterDir(sc);
+			//輸出功能訊息
+			funMsg();
 			//輸入功能編號
 			funNum = enterFunNumber(sc);
 			//執行指定功能
