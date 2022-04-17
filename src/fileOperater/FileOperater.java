@@ -31,7 +31,11 @@ public class FileOperater {
 		return Path.substring(0,Path.lastIndexOf("\\"));
 	}
 	public String getFileName(String Path){
-		return Path.substring(Path.lastIndexOf("\\") + 1, Path.lastIndexOf("."));
+		int dotIndex = Path.lastIndexOf(".");
+		if(dotIndex == -1) {
+			return Path.substring(Path.lastIndexOf("\\") + 1);
+		}
+		return Path.substring(Path.lastIndexOf("\\") + 1, dotIndex);
 	}
 	public String getExtension(String Path){
 		return Path.substring(Path.lastIndexOf(".") + 1);
