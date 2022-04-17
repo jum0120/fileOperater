@@ -1,19 +1,12 @@
 package fileOperater;
 
-import java.io.*;
+import java.io.File;
+
 public class FileOperaterController {
 	private FileOperater model;
 	private FileOperaterView view;
 	
 	//constructor
-	public FileOperaterController(String path){
-	      this.model = new FileOperater(path);
-	      this.view = new FileOperaterView();
-	}
-	public FileOperaterController(File f){
-	      this.model = new FileOperater(f);
-	      this.view = new FileOperaterView();
-	}
 	public FileOperaterController(FileOperater model, FileOperaterView view){
 	      this.model = model;
 	      this.view = view;
@@ -59,7 +52,7 @@ public class FileOperaterController {
 	//**以下為view**
 	//把含子資料夾的全部檔案print
 	public void showFiles(){
-		view.showFiles(model.getF());
+		view.showFiles(model.getFile());
 	}
 	
 	

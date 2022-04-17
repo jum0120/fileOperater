@@ -50,7 +50,8 @@ public class fileOperaterMain {
 		return funNum;
 	}
 	public static void funSelect(Scanner sc, String dir, int num){
-		FileOperaterController fior = new FileOperaterController(dir);
+		FileOperaterController fior = new FileOperaterController(
+				new FileOperater(dir), new FileOperaterView());
 		//showFiles
 		if (num == 1){
 			fior.showFiles();

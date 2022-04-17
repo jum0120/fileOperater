@@ -20,7 +20,7 @@ public class FileOperater {
 		this.path = f.getAbsolutePath();
 		this.f = f;
 	}
-	public File getF() {
+	public File getFile() {
 		return f;
 	}
 	public String getPath() {
