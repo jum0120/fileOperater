@@ -27,20 +27,28 @@ public class FileOperater {
 		return path;
 	}
 	
-	public String getDirPath(String path){
-		return path.substring(0,path.lastIndexOf("\\"));
+	private String getDirPath(String path){
+		return path.substring(0, path.lastIndexOf("\\"));
 	}
-	public String getFileName(String path){
+	private String getFileName(String path){
 		int dotIndex = path.lastIndexOf(".");
+		int fileNameStartIndex = path.lastIndexOf("\\") + 1;
 		//path不包含extension
-		if(dotIndex == -1) {
-			return path.substring(path.lastIndexOf("\\") + 1);
+		if(fileNameStartIndex >= dotIndex) {
+			return path.substring(fileNameStartIndex);
 		}
 		//path包含extension
-		return path.substring(path.lastIndexOf("\\") + 1, dotIndex);
+		return path.substring(fileNameStartIndex, dotIndex);
 	}
-	public String getExtension(String path){
-		return path.substring(path.lastIndexOf(".") + 1);
+	private String getExtension(String path){
+		int dotIndex = path.lastIndexOf(".");
+		int fileNameStartIndex = path.lastIndexOf("\\") + 1;
+		//path不包含extension
+		if(fileNameStartIndex >= dotIndex) {
+			return "";
+		}
+		//path包含extension
+		return path.substring(dotIndex + 1);
 	}
 	
 	//把子資料夾的所有檔案全部移出到coll

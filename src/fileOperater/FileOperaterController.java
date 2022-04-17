@@ -20,15 +20,6 @@ public class FileOperaterController {
 	}
 	
 	//**以下為model**
-	public String getDirPath(String Path){
-		return model.getDirPath(Path);
-	}
-	public String getFileName(String Path){
-		return model.getFileName(Path);
-	}
-	public String getExtension(String Path){
-		return model.getExtension(Path);
-	}
 	
 	//把子資料夾的所有檔案全部移出到coll
 	public void collectFiles(){
