@@ -13,6 +13,8 @@
 
 5：renameFileByTxt（依.txt檔內容批量更改檔案名稱）
 
+6：imageReEncode（將.jpg 重新編碼）
+
 # e.t.c
 **為回應
 
@@ -23,6 +25,7 @@
     **功能3：collectFilesLink（需有系統管理員權限）
     **功能4：numberAdd
     **功能5：renameFileByTxt
+    **功能6：imageReEncode
     **請輸入編號：
     2
     **檔案收集完成 資料夾：coll
