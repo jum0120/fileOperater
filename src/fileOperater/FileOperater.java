@@ -163,6 +163,66 @@ public class FileOperater {
 		} 
 	}
 	
+	// 把資料夾的圖片檔案重新編碼
+	public void imageReEncode() {
+		String collDirName = "_reEncode";
+		File[] files = f.listFiles();
+		// 有檔案/資料夾存在
+		if (files.length > 0) {
+			// 製造收集重編碼後的圖片資料夾
+			File collectDir = new File(path + "/" + collDirName);
+			if (!collectDir.exists()) {
+				collectDir.mkdirs();
+			}
+			for (int i = 0; i < files.length; i++) {
+				// 不重複則收集
+				if (!files[i].getName().equals(collDirName)) {
+					// 遞迴下層資料夾
+					imageReEncodeRecursive(collectDir.getAbsolutePath(), files[i]);
+				}
+			}
+			System.out.println("檔案收集完成 資料夾:" + collDirName);
+		} else {
+			System.out.println("無檔案");
+		}
+	}
+
+	// imageReEncode 的遞迴用
+	private void imageReEncodeRecursive(String collectDirPath, File f) {
+		// 目標是資料夾
+		if (f.isDirectory()) {
+			File[] files = f.listFiles();
+			if (files.length > 0) {
+				for (int i = 0; i < files.length; i++) {
+					String nextlevelDriPath = collectDirPath + "/" + f.getName();
+					File collectDir = new File(nextlevelDriPath);
+					if (!collectDir.exists()) {
+						collectDir.mkdirs();
+					}
+					imageReEncodeRecursive(nextlevelDriPath, files[i]);
+				}
+			}
+			// 目標是檔案
+		} else {
+			String oldFilePath = f.getAbsolutePath();
+			String newFilePath = collectDirPath + "/" + f.getName();
+			File ftest = new File(newFilePath);
+			// 檔案不重複
+			if (!ftest.exists()) {
+				// 複製並搬移檔案
+				ImageEncoder imageEncoder = new ImageEncoder();
+			    try {
+					imageEncoder.imageReEncode(oldFilePath, newFilePath);
+					System.out.println(f.getName() + " 重編碼完成");
+				} catch (IOException e) {
+					System.out.println(e.toString());
+				}
+			} else {
+				System.out.println(ftest.getName() + " 已存在");
+			}
+		}
+	}
+	
 	//@Overload
 	public void numberAdd(int num){
 		numberAdd(f, num);

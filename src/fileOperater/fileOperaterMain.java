@@ -27,6 +27,7 @@ public class fileOperaterMain {
 		System.out.println("功能3：collectFilesLink（需有系統管理員權限）");
 		System.out.println("功能4：numberAdd");
 		System.out.println("功能5：renameFileByTxt");
+		System.out.println("功能6：imageReEncode");
 	}
 	public static int enterFunNumber(Scanner sc){
 		System.out.println("請輸入編號：");
@@ -35,13 +36,13 @@ public class fileOperaterMain {
 			funNum = Integer.parseInt(sc.nextLine());
 			
 			//輸入錯誤編號
-			//合理數據:1~5
-			if (funNum > 5 || funNum < 1){
+			//合理數據:1~6
+			if (funNum > 6 || funNum < 1){
 				System.out.println("輸入錯誤，請重新輸入。");
 				funNum = enterFunNumber(sc);
 			}	
 		//輸入錯誤格式
-		//合理數據:1~5
+		//合理數據:1~6
 		}catch(Exception e){
 			System.out.println("輸入錯誤，請重新輸入。");
 			funNum = enterFunNumber(sc);
@@ -72,6 +73,8 @@ public class fileOperaterMain {
 			System.out.println("請輸入txt路徑：");
 			String txtPath = sc.nextLine();
 			fior.renameFileByTxt(txtPath);
+		} else if (num == 6) {
+			fior.imageReEncode();
 		}
 	}
 	public static void main(String[] args){
